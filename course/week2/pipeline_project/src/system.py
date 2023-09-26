@@ -1,3 +1,4 @@
+#%%
 r"""A PyTorch Lightning system for training MNIST."""
 
 import os
@@ -10,7 +11,7 @@ from torch.utils.data import Subset, DataLoader
 import pytorch_lightning as pl
 from torchvision import datasets, transforms
 
-
+#%%
 class MNISTDataModule(pl.LightningDataModule):
   r"""Data module wrapper around MNIST datasets."""
 
@@ -71,7 +72,7 @@ class MNISTDataModule(pl.LightningDataModule):
   def test_dataloader(self):
     return DataLoader(self.test_dataset, batch_size = self.batch_size)
 
-
+#%%
 class DigitClassifierSystem(pl.LightningModule):
   """Remember PyTorch Lightning from the DL Refresher in Week 1?
 
@@ -177,3 +178,6 @@ class DigitClassifierSystem(pl.LightningModule):
 
   def predict_step(self, x):
     return self.forward(x)
+
+if __name__ == '__main__':
+  print("Hello world!")

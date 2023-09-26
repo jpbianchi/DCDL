@@ -92,6 +92,8 @@ def build_regression_test(system, loader):
     # -- 
     # batch_loss = ...
     # convert batch_loss to list of floats
+    batch_is_correct = torch.eq(labels, preds).tolist()
+    batch_loss = F.cross_entropy(logits, labels, reduction='none')
     # 
     # Type:
     # --
@@ -111,7 +113,7 @@ def build_regression_test(system, loader):
   is_correct = np.array(is_correct)
 
   losses_incorrect = losses[is_correct == 0]
-  indices = np.argsort(losses_incorrect)[::-1][:100]
+  indices = np.argsort(losses_incorrect)[::-1][:100]  # take the first 100 worst losses
 
   images = []
   labels = []
