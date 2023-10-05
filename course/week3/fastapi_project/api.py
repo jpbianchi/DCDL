@@ -56,7 +56,7 @@ class ErrorResponse(BaseModel):
 
 app: FastAPI = FastAPI(
   title = 'mnist classifier',
-  description = 'corise data-centric deep learning week 3',
+  description = 'data-centric deep learning',
 )
 
 
@@ -124,11 +124,9 @@ def predict(request: Request, body: InferenceInput):
     # HINT: there is no data module here. Which method should you use
     # from system to make a prediction? 
     # 
-    # Our solution is one of code. 
+    # Our solution is one line of code. 
     # 
-    # Pseudocode:
-    # --
-    # logits = ... (use system)
+    logits = system.predict_step(im)
     # 
     # Types:
     # --
@@ -147,9 +145,7 @@ def predict(request: Request, body: InferenceInput):
     # variable `probs`. Remember `logits` is shape (1, 10), and 
     # we expect your output `probs` to be shape (1, 10) as well.
     # 
-    # Pseudocode:
-    # --
-    # probs = ...do something to logits...
+    probs = F.softmax(logits, dim=-1)
     # 
     # Types:
     # --

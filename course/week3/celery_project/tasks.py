@@ -44,7 +44,7 @@ class PredictionTask(Task):
     # 
     # Pseudocode:
     # --
-    # system = ...
+    system = DigitClassifierSystem.load_from_checkpoint(MODEL_PATH)
     # 
     # Types:
     # --
@@ -103,6 +103,7 @@ def predict_single(self, data):
     # --
     # logits: torch.Tensor (shape: 1x10)
     # ================================
+    logits = self.system.predict_step(im) # base class is PredictionTask!!
     assert logits is not None, "logits is not defined."
 
     # To extract the label, just find the largest logit.
@@ -123,6 +124,7 @@ def predict_single(self, data):
     # --
     # probs: torch.Tensor (shape: 1x10)
     # ================================
+    probs = F.softmax(logits, dim=-1)
     assert probs is not None, "probs is not defined."
     probs = probs.squeeze(0)        # squeeze to (10) shape
     probs = probs.numpy().tolist()  # convert tensor to list
@@ -134,8 +136,31 @@ def predict_single(self, data):
   # NOTE: simulate hard computation! This will help motivate 
   # why we need Celery.
   # 
-  # Uncomment me when you are told to in the notes!
-  # time.sleep(5)
+  # Uncomment when running bash try_api_many_post.sh 
+  time.sleep(5)
   # ================================
 
   return results
+
+
+# bash try_api_post.sh 
+# {"task_id":"70d49437-598d-4dfe-a898-1784b59ddb3e","status":"processing"}gitpod /
+
+# in the celery terminal, we get
+# [2023-10-05 21:41:30,035: INFO/MainProcess] Connected to redis://localhost:6379/0
+# [2023-10-05 21:41:30,037: INFO/MainProcess] mingle: searching for neighbors
+# [2023-10-05 21:41:31,045: INFO/MainProcess] mingle: all alone
+# [2023-10-05 21:41:31,059: INFO/MainProcess] celery@jpbianchi-dcdl-uenra6lkt0u ready.
+# [2023-10-05 21:42:01,823: INFO/MainProcess] Task tasks.predict_single[e53aa71f-c123-4c29-ad65-0cc3d4dc329e] received
+# [2023-10-05 21:42:01,825: WARNING/ForkPoolWorker-14] Loading digit classifier system from /workspace/DCDL/course/week3/celery_project/ckpts/deploy.ckpt
+# [2023-10-05 21:42:01,837: INFO/ForkPoolWorker-14] Created a temporary directory at /tmp/tmp0otj9k4r
+# [2023-10-05 21:42:01,837: INFO/ForkPoolWorker-14] Writing /tmp/tmp0otj9k4r/_remote_module_non_sriptable.py
+# [2023-10-05 21:42:01,850: WARNING/ForkPoolWorker-14] Loading successful.
+# [2023-10-05 21:42:01,863: INFO/ForkPoolWorker-14] Task tasks.predict_single[e53aa71f-c123-4c29-ad65-0cc3d4dc329e] succeeded in 0.03834275600092951s: {'label': 0, 'probs': [0.9983910918235779, 7.006843816270703e-08, 0.0002845293201971799, 4.518036291756289e-07, 3.631959998529055e-06, 0.00010714778181863949, 2.985075298056472e-05, 0.001065577263943851, 3.5141013086104067e-06, 0.00011397666821721941]}
+# [2023-10-05 21:43:17,227: INFO/MainProcess] Task tasks.predict_single[70d49437-598d-4dfe-a898-1784b59ddb3e] received
+# [2023-10-05 21:43:17,230: INFO/ForkPoolWorker-14] Task tasks.predict_single[70d49437-598d-4dfe-a898-1784b59ddb3e] succeeded in 0.0024355190034839325s: {'label': 0, 'probs': [0.9983910918235779, 7.006843816270703e-08, 0.0002845293201971799, 4.518036291756289e-07, 3.631959998529055e-06, 0.00010714778181863949, 2.985075298056472e-05, 0.001065577263943851, 3.5141013086104067e-06, 0.00011397666821721941]}
+
+# bash try_api_get.sh "70d49437-598d-4dfe-a898-1784b59ddb3e" 
+# {"task_id":"70d49437-598d-4dfe-a898-1784b59ddb3e",
+#  "status":"complete",
+#  "results":{"label":0,"probs":[0.9983910918235779,7.006843816270703e-08,0.0002845293201971799,4.518036291756289e-07,3.631959998529055e-06,0.00010714778181863949,2.985075298056472e-05,0.001065577263943851,3.5141013086104067e-06,0.00011397666821721941]}

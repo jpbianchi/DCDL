@@ -1,3 +1,6 @@
+course/week2/pipeline_project/artifacts/data/
+course/week3/conflearn_project/data/dev.npy
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -131,6 +134,6 @@ dmypy.json
 **.metaflow
 **logs/
 **lightning_logs/
-**ckpts/
+#**ckpts/
 **artifacts/
 **.pt
