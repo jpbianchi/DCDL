@@ -116,3 +116,66 @@ if __name__ == "__main__":
   You can specify a run id as well.
   """
   flow = EvalClassifier()
+
+# python eval_flow.py run --config configs/eval.json
+
+# Metaflow 2.6.0 executing EvalClassifier for user:gitpod
+# Validating your flow...
+#     The graph looks good!
+# Running pylint...
+#     Pylint is happy!
+# 2023-10-11 20:20:48.085 Workflow starting (run-id 1697055648079786):
+# 2023-10-11 20:20:48.105 [1697055648079786/start/1 (pid 64187)] Task is starting.
+# 2023-10-11 20:20:50.420 [1697055648079786/start/1 (pid 64187)] Task finished successfully.
+# 2023-10-11 20:20:50.440 [1697055648079786/load_system/2 (pid 64215)] Task is starting.
+# 2023-10-11 20:20:52.460 [1697055648079786/load_system/2 (pid 64215)] GPU available: False, used: False
+# 2023-10-11 20:20:52.460 [1697055648079786/load_system/2 (pid 64215)] TPU available: False, using: 0 TPU cores
+# 2023-10-11 20:20:52.460 [1697055648079786/load_system/2 (pid 64215)] IPU available: False, using: 0 IPUs
+# 2023-10-11 20:20:52.461 [1697055648079786/load_system/2 (pid 64215)] HPU available: False, using: 0 HPUs
+# 2023-10-11 20:20:52.861 [1697055648079786/load_system/2 (pid 64215)] Task finished successfully.
+# 2023-10-11 20:20:52.881 [1697055648079786/evaluate/3 (pid 64244)] Task is starting.
+# Testing DataLoader 0: 100%|██████████| 32/32 [00:00<00:00, 54.96it/s]ting: 0it [00:00, ?it/s]
+# Testing DataLoader 0: 100%|██████████| 32/32 [00:00<00:00, 53.61it/s]ting: 0it [00:00, ?it/s]
+# 2023-10-11 20:20:57.219 [1697055648079786/evaluate/3 (pid 64244)] Results on English reviews:
+# 2023-10-11 20:20:57.219 [1697055648079786/evaluate/3 (pid 64244)] {'acc': 0.8884, 'loss': 0.2857}. # << ACC 0.88
+# 2023-10-11 20:20:57.219 [1697055648079786/evaluate/3 (pid 64244)] Results on Spanish reviews:
+# 2023-10-11 20:20:57.219 [1697055648079786/evaluate/3 (pid 64244)] {'acc': 0.7380, 'loss': 0.5352}  # <<< ACC 0.73 for spanish
+# 2023-10-11 20:20:59.668 [1697055648079786/evaluate/3 (pid 64244)] Task finished successfully.
+# 2023-10-11 20:20:59.688 [1697055648079786/end/4 (pid 64509)] Task is starting.
+# 2023-10-11 20:21:01.779 [1697055648079786/end/4 (pid 64509)] done! great work!
+# 2023-10-11 20:21:02.189 [1697055648079786/end/4 (pid 64509)] Task finished successfully.
+# 2023-10-11 20:21:02.190 Done!
+
+
+
+# python eval_flow.py run --config configs/eval_dro.json
+
+# Metaflow 2.6.0 executing EvalClassifier for user:gitpod
+# Validating your flow...
+#     The graph looks good!
+# Running pylint...
+#     Pylint is happy!
+# 2023-10-11 20:53:05.947 Workflow starting (run-id 1697057585941912):
+# 2023-10-11 20:53:05.972 [1697057585941912/start/1 (pid 71610)] Task is starting.
+# 2023-10-11 20:53:08.632 [1697057585941912/start/1 (pid 71610)] Task finished successfully.
+# 2023-10-11 20:53:08.655 [1697057585941912/load_system/2 (pid 71690)] Task is starting.
+# 2023-10-11 20:53:10.970 [1697057585941912/load_system/2 (pid 71690)] GPU available: False, used: False
+# 2023-10-11 20:53:11.362 [1697057585941912/load_system/2 (pid 71690)] TPU available: False, using: 0 TPU cores
+# 2023-10-11 20:53:11.363 [1697057585941912/load_system/2 (pid 71690)] IPU available: False, using: 0 IPUs
+# 2023-10-11 20:53:11.363 [1697057585941912/load_system/2 (pid 71690)] HPU available: False, using: 0 HPUs
+# 2023-10-11 20:53:11.364 [1697057585941912/load_system/2 (pid 71690)] Task finished successfully.
+# 2023-10-11 20:53:11.387 [1697057585941912/evaluate/3 (pid 71750)] Task is starting.
+# Testing DataLoader 0: 100%|██████████| 32/32 [00:00<00:00, 64.49it/s]ting: 0it [00:00, ?it/s]
+# Testing DataLoader 0: 100%|██████████| 32/32 [00:00<00:00, 62.01it/s]ting: 0it [00:00, ?it/s]
+# 2023-10-11 20:53:15.316 [1697057585941912/evaluate/3 (pid 71750)] Results on English reviews:
+# 2023-10-11 20:53:15.316 [1697057585941912/evaluate/3 (pid 71750)] {'acc': 0.841, 'loss': 0.415} <<< ACC EN 0.84
+# 2023-10-11 20:53:17.774 [1697057585941912/evaluate/3 (pid 71750)] Results on Spanish reviews:
+# 2023-10-11 20:53:17.774 [1697057585941912/evaluate/3 (pid 71750)] {'acc': 0.741, 'loss': 0.5412} <<< ACC SP 0.74
+# 2023-10-11 20:53:17.776 [1697057585941912/evaluate/3 (pid 71750)] Task finished successfully.
+# 2023-10-11 20:53:17.799 [1697057585941912/end/4 (pid 72016)] Task is starting.
+# 2023-10-11 20:53:19.766 [1697057585941912/end/4 (pid 72016)] done! great work!
+# 2023-10-11 20:53:20.251 [1697057585941912/end/4 (pid 72016)] Task finished successfully.
+# 2023-10-11 20:53:20.252 Done!
+
+# English went down from 0.89 to 0.84
+# Spanish went up   from 0.738 to 0.741

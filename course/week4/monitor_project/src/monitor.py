@@ -11,13 +11,6 @@ def get_ks_score(tr_probs, te_probs):
   # 
   # Compute the p-value from the Kolmogorov-Smirnov test.
   # You may use the imported `ks_2samp`.
-  # 
-  # Pseudocode:
-  # --
-  # convert tr_prob to numpy
-  # convert te_prob to numpy
-  # apply ks_2samp
-  # 
   # Type:
   # --
   # tr_probs: torch.Tensor
@@ -26,6 +19,7 @@ def get_ks_score(tr_probs, te_probs):
   #   predicted probabilities from test test
   # score: float - between 0 and 1
   # ============================
+  _, score = ks_2samp(tr_probs.numpy(), te_probs.numpy())
   return score
 
 
@@ -68,6 +62,14 @@ def get_hist_score(tr_probs, te_probs, bins=10):
   # Read the documentation for `np.histogram` carefully, in
   # particular what `bin_edges` represent.
   # ============================
+  tr_heights, bin_edges = np.histogram(tr_probs, bins=bins, density=True) # density to normalize
+  te_heights, _ = np.histogram(te_probs, bins=bin_edges, density=True)
+
+  bin_width = bin_edges[1]-bin_edges[0]   # bins have same width
+  intersects = np.min(np.vstack([tr_heights,te_heights]), axis=0)
+  score = bin_width * intersects.sum().item()
+
+  print(f"{score=:.3f}")
   return score
 
 
@@ -81,13 +83,6 @@ def get_vocab_outlier(tr_vocab, te_vocab):
   # of 0 would mean all of the words in the test vocab
   # appear in the training vocab. A score of 1 would mean
   # none of the new words have been seen before. 
-  # 
-  # Pseudocode:
-  # --
-  # num_seen = ...
-  # num_total = ...
-  # score = 1 - (num_seen / num_total)
-  # 
   # Type:
   # --
   # tr_vocab: dict[str, int]
@@ -96,6 +91,14 @@ def get_vocab_outlier(tr_vocab, te_vocab):
   #   Map from word to count for test examples
   # score: float (between 0 and 1)
   # ============================
+
+  # vocab are dictionaries, so there are no word doubles, we can use sets
+  num_seen = len(set(te_vocab.keys()) & set(tr_vocab.keys()))
+  num_total = len(te_vocab)
+  assert num_total > 0, "ERROR: num_total = 0"
+
+  print(f"Vocab Outlier: {num_seen} seen / {num_total} total")
+  score = 1 - (num_seen/float(num_total))
   return score
 
 
@@ -130,12 +133,18 @@ class MonitoringSystem:
     # 
     # `te_probs_cal`: torch.Tensor
     # ============================
+    calibration_model = IsotonicRegression(out_of_bounds='clip')
+    tr_probs_cal = calibration_model.fit_transform(tr_probs.numpy(), tr_labels.numpy())
+    tr_probs_cal = torch.from_numpy(tr_probs_cal).float()
+
+    te_probs_cal = calibration_model.transform(te_probs.numpy())
+    te_probs_cal = torch.from_numpy(te_probs_cal).float()
     return tr_probs_cal, te_probs_cal
 
   def monitor(self, te_vocab, te_probs):
     tr_probs, te_probs = self.calibrate(self.tr_probs, self.tr_labels, te_probs)
 
-    # compute metrics. 
+    # metrics
     ks_score = get_ks_score(tr_probs, te_probs)
     hist_score = get_hist_score(tr_probs, te_probs)
     outlier_score = get_vocab_outlier(self.tr_vocab, te_vocab)

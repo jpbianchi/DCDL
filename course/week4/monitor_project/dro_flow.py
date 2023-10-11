@@ -120,3 +120,43 @@ if __name__ == "__main__":
   You can specify a run id as well.
   """
   flow = DistRobustOpt()
+
+# python dro_flow.py run --config configs/dro.json
+
+# Metaflow 2.6.0 executing DistRobustOpt for user:gitpod
+# Validating your flow...
+#     The graph looks good!
+# Running pylint...
+#     Pylint is happy!
+# 2023-10-11 20:36:59.068 Workflow starting (run-id 1697056619063715):
+# 2023-10-11 20:36:59.092 [1697056619063715/start/1 (pid 67480)] Task is starting.
+# 2023-10-11 20:37:01.897 [1697056619063715/start/1 (pid 67480)] Task finished successfully.
+# 2023-10-11 20:37:01.923 [1697056619063715/init_system/2 (pid 67505)] Task is starting.
+# 2023-10-11 20:37:06.096 [1697056619063715/init_system/2 (pid 67505)] GPU available: False, used: False
+# 2023-10-11 20:37:06.097 [1697056619063715/init_system/2 (pid 67505)] TPU available: False, using: 0 TPU cores
+# 2023-10-11 20:37:06.097 [1697056619063715/init_system/2 (pid 67505)] IPU available: False, using: 0 IPUs
+# 2023-10-11 20:37:51.291 [1697056619063715/init_system/2 (pid 67505)] HPU available: False, using: 0 HPUs
+# 2023-10-11 20:37:51.292 [1697056619063715/init_system/2 (pid 67505)] Task finished successfully.
+# 2023-10-11 20:37:51.320 [1697056619063715/train_dro/3 (pid 67573)] Task is starting.
+# 2023-10-11 20:38:03.337 [1697056619063715/train_dro/3 (pid 67573)] 
+# Epoch 9: 100%|██████████| 1282/1282 [00:32<00:00, 39.78it/s, loss=0.965, v_num=63, train_loss=0.743, train_acc=0.875, dev_loss=0.970, dev_acc=0.834]4]
+# 2023-10-11 20:46:17.402 [1697056619063715/train_dro/3 (pid 67573)] | Name  | Type       | Params|██████████| 32/32 [00:00<00:00, 51.88it/s] 
+# 2023-10-11 20:46:17.403 [1697056619063715/train_dro/3 (pid 67573)] -------------------------------------
+# 2023-10-11 20:46:17.403 [1697056619063715/train_dro/3 (pid 67573)] 0 | model | Sequential | 49.3 K
+# 2023-10-11 20:46:17.403 [1697056619063715/train_dro/3 (pid 67573)] -------------------------------------
+# 2023-10-11 20:46:17.403 [1697056619063715/train_dro/3 (pid 67573)] 49.3 K    Trainable params
+# 2023-10-11 20:46:17.403 [1697056619063715/train_dro/3 (pid 67573)] 0         Non-trainable params
+# 2023-10-11 20:46:17.403 [1697056619063715/train_dro/3 (pid 67573)] 49.3 K    Total params
+# 2023-10-11 20:46:17.403 [1697056619063715/train_dro/3 (pid 67573)] 0.197     Total estimated model params size (MB)
+# 2023-10-11 20:46:17.404 [1697056619063715/train_dro/3 (pid 67573)] Task finished successfully.
+# 2023-10-11 20:46:17.434 [1697056619063715/offline_test/4 (pid 70201)] Task is starting.
+# 2023-10-11 20:46:50.000 [1697056619063715/offline_test/4 (pid 70201)] Restoring states from the checkpoint path at /workspace/DCDL/course/week4/monitor_project/artifacts/ckpts/dro/epoch=9-step=12500.ckpt
+# 2023-10-11 20:46:50.013 [1697056619063715/offline_test/4 (pid 70201)] Loaded model weights from checkpoint at /workspace/DCDL/course/week4/monitor_project/artifacts/ckpts/dro/epoch=9-step=12500.ckpt
+# Testing DataLoader 0: 100%|██████████| 32/32 [00:00<00:00, 32.17it/s] Testing: 0it [00:00, ?it/s]
+# 2023-10-11 20:46:51.723 [1697056619063715/offline_test/4 (pid 70201)] {'acc': 0.834, 'loss': 0.965}. # <<< ACC 0.834
+# 2023-10-11 20:49:08.679 [1697056619063715/offline_test/4 (pid 70201)] Task finished successfully.
+# 2023-10-11 20:49:08.706 [1697056619063715/end/5 (pid 70435)] Task is starting.
+# 2023-10-11 20:49:10.815 [1697056619063715/end/5 (pid 70435)] done! great work!
+# 2023-10-11 20:49:11.233 [1697056619063715/end/5 (pid 70435)] Task finished successfully.
+# 2023-10-11 20:49:11.233 Done!
+

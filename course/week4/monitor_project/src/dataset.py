@@ -3,8 +3,9 @@ import numpy as np
 import pandas as pd
 from os.path import join
 from torch.utils.data import Dataset
-from collections import defaultdict
+from collections import defaultdict, Counter
 from src.paths import DATA_DIR
+import re
 
 
 class ProductReviewEmbeddings(Dataset):
@@ -42,7 +43,9 @@ class ProductReviewEmbeddings(Dataset):
     # loop through `self.data.review`
     #   split review into tokens
     #   update vocab with each token
-    # 
+    #  self.data is like
+    # review,label
+    # Arrived broken. Manufacturer defect. Two of the legs detached... got me,0
     # Type:
     # --
     # vocab: dict[str, int]
@@ -51,6 +54,7 @@ class ProductReviewEmbeddings(Dataset):
     # --
     # Convert tokens to lowercase when updating vocab.
     # ===============================
+    vocab = Counter(re.findall(r'\w+\b',' '.join(self.data.review).lower()))
     return dict(vocab)
 
   def get_labels(self):
@@ -110,6 +114,7 @@ class ProductReviewStream(Dataset):
     # --
     # vocab: dict[str, int]
     # ===============================
+    vocab = Counter(re.findall(r'\w+\b',' '.join(self.data.review).lower()))
     return dict(vocab)
 
   def __getitem__(self, index):
