@@ -380,7 +380,8 @@ if __name__ == "__main__":
   """
   flow = TrainIdentifyReview()
 
-# first, download the big lfs files
+# first, install lfs
+# see https://git-lfs.com/
 # cd data
 # sudo git lfs pull (you will have to provideyour github id and pw)
 
